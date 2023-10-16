@@ -1,0 +1,87 @@
+{
+  "[latex]": {
+    "editor.wordWrap": "on",
+    "editor.wordSeparators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?。．、，（）「」『』［］｛｝《》てにをはがのともへでや ",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    },
+    "editor.bracketPairColorization.enabled": true,
+    "editor.unicodeHighlight.invisibleCharacters": true,
+    "editor.unicodeHighlight.allowedCharacters": {
+      "，": true,
+      "．": true,
+      "！": true,
+      "？": true,
+      "［": true,
+      "］": true,
+      "｛": true,
+      "｝": true,
+      "＜": true,
+      "＞": true,
+    },
+    "editor.stickyScroll.enabled": true,
+  },
+  //保存時に自動でビルド
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  //ビルドのインターバル
+  "latex-workshop.latex.autoBuild.interval": 1000,
+
+  // インテリセンスの有効化
+  "latex-workshop.intellisense.package.enabled": true,
+
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "replace forbid chars -> lualatexmk -> move pdf",
+      "tools": [
+        "replace forbid chars",
+        "lualatexmk",
+        "move pdf"
+      ],
+    },
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "lualatexmk",
+      "command": "latexmk",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-outdir=./build",
+        "-pdf",
+        "-lualatex",
+        "-r",
+        "/workdir/.latexmkrc",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "move pdf",
+      "command": "mv",
+      "args": [
+        "./build/%DOCFILE%.pdf",
+        "./%DOCFILE%.pdf"
+      ],
+    },
+    {
+      "name": "replace forbid chars",
+      "command": "/workdir/script/replace",
+      "args": [
+        "-f",
+        "./%DOCFILE%.tex",
+        "-s",
+        "行う,行った,全て,事,出来る,出来た,時,、,。,(,)",
+        "-r",
+        "おこなう,おこなった,すべて,こと,できる,できた,とき,，,．,（,）"
+      ],
+    }
+  ]
+}
